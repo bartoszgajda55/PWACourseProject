@@ -15,12 +15,13 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
 let promise = new Promise((resolve, reject) => {
   setTimeout(() => {
-    resolve("Promise resolved")
+    // resolve("Promise resolved");
+    reject("error bo tak");
   }, 3000);
 });
 
 promise.then(value => {
   console.log(value);
 }).catch(reason =>  {
-  console.log(reason);
+  console.error(reason);
 });
