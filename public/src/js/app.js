@@ -12,3 +12,15 @@ window.addEventListener('beforeinstallprompt', (e) => {
   deferredPrompt = e;
   return false;
 });
+
+let promise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve("Promise resolved")
+  }, 3000);
+});
+
+promise.then(value => {
+  console.log(value);
+}).catch(reason =>  {
+  console.log(reason);
+});
