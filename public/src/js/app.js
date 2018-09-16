@@ -20,6 +20,17 @@ let promise = new Promise((resolve, reject) => {
   }, 3000);
 });
 
+let xhr = new XMLHttpRequest();
+xhr.open("GET", "https://httpbin.org/ip");
+xhr.responseType = "json";
+xhr.onload = ev => {
+  console.log(xhr.response);
+};
+xhr.onerror = ev => {
+  console.log("error");
+};
+xhr.send();
+
 fetch("https://httpbin.org/ip")
   .then(value => {
     return value.json();
