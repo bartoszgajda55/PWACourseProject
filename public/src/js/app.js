@@ -37,7 +37,8 @@ fetch("https://httpbin.org/post", {
     "Content-Type": "application/json",
     "Accept": "application/json"
   },
-  body: JSON.stringify({message: "Does this work?"})
+  body: JSON.stringify({message: "Does this work?"}),
+  mode: "cors"
 })
   .then(value => {
     return value.json();
