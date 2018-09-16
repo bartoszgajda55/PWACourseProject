@@ -15,10 +15,21 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
 let promise = new Promise((resolve, reject) => {
   setTimeout(() => {
-    // resolve("Promise resolved");
-    reject("error bo tak");
+    resolve("Promise resolved");
+    // reject("error bo tak");
   }, 3000);
 });
+
+fetch("https://httpbin.org/ip")
+  .then(value => {
+    return value.json();
+  })
+  .then(data => {
+    console.log(data);
+  })
+  .catch(err => {
+    console.log(err);
+  });
 
 promise.then(value => {
   console.log(value);
