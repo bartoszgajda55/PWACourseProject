@@ -8,6 +8,5 @@ self.addEventListener("activate", function (event) {
 });
 
 self.addEventListener("fetch", function (event) {
-  // console.log("fetch sw", event);
   event.respondWith(fetch(event.request));
 });
