@@ -1,7 +1,7 @@
 self.addEventListener("install", function (event) {
   console.log("installing sw", event);
   event.waitUntil(
-    caches.open("static-v3")
+    caches.open("static-v4")
       .then(function (cache) {
         console.log("precaching app shell");
         cache.addAll([
@@ -25,6 +25,17 @@ self.addEventListener("install", function (event) {
 
 self.addEventListener("activate", function (event) {
   console.log("activating sw", event);
+  event.waitUntil(
+    caches.keys()
+      .then(function (keyList) {
+        return Promise.all(keyList.map(function (key) {
+          if (key !== "static-v4" && key !== "dynamic") {
+            console.log("cleaning old cache", key);
+            return caches.delete(key);
+          }
+        }));
+      })
+  );
   return self.clients.claim();
 });
 
