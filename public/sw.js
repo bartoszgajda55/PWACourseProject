@@ -4,6 +4,8 @@ self.addEventListener("install", function (event) {
     caches.open("static")
       .then(function (cache) {
         console.log("precaching app shell");
+        cache.add("/");
+        cache.add("/index.html");
         cache.add("/src/js/app.js");
       })
   );
