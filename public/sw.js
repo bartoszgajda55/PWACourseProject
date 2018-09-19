@@ -17,7 +17,7 @@ self.addEventListener("install", function (event) {
           "/src/images/main-image.jpg",
           "https://fonts.googleapis.com/css?family=Roboto:400,700",
           "https://fonts.googleapis.com/icon?family=Material+Icons",
-          // "https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.indigo-pink.min.css"
+          "https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.indigo-pink.min.css"
         ]);
       })
   );
