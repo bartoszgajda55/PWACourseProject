@@ -1,7 +1,7 @@
 self.addEventListener("install", function (event) {
   console.log("installing sw", event);
   event.waitUntil(
-    caches.open("static")
+    caches.open("static-v3")
       .then(function (cache) {
         console.log("precaching app shell");
         cache.addAll([
