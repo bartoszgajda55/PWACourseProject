@@ -1,5 +1,5 @@
-const CACHE_STATIC_NAME = "static-v7";
-const CACHE_DYNAMIC_NAME = "dynamic-v2";
+const CACHE_STATIC_NAME = "static-v8";
+const CACHE_DYNAMIC_NAME = "dynamic-v3";
 
 self.addEventListener("install", function (event) {
   console.log("installing sw", event);
@@ -53,7 +53,7 @@ self.addEventListener("fetch", function (event) {
             .then(function (res) {
               return caches.open(CACHE_DYNAMIC_NAME)
                 .then(function (cache) {
-                  // cache.put(event.request.url, res.clone());
+                  cache.put(event.request.url, res.clone());
                   return res;
                 })
             });
