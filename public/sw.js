@@ -1,4 +1,4 @@
-const CACHE_STATIC_NAME = "static-v11";
+const CACHE_STATIC_NAME = "static-v12";
 const CACHE_DYNAMIC_NAME = "dynamic-v3";
 
 self.addEventListener("install", function (event) {
@@ -70,22 +70,36 @@ self.addEventListener("activate", function (event) {
 //   );
 // });
 
-// Network then Cache Strategy
+// Cache then Network
 self.addEventListener("fetch", function (event) {
   event.respondWith(
-    fetch(event.request)
-      .then(function (res) {
-        return caches.open(CACHE_DYNAMIC_NAME)
-          .then(function (cache) {
-            cache.put(event.request.url, res.clone());
+    caches.open(CACHE_DYNAMIC_NAME)
+      .then(function (cache) {
+        return fetch(event.request)
+          .then(function (res) {
+            cache.put(event.request, res.clone());
             return res;
-          })
-      })
-      .catch(function (err) {
-        return caches.match(event.request);
+          });
       })
   );
 });
+
+// Network then Cache Strategy
+// self.addEventListener("fetch", function (event) {
+//   event.respondWith(
+//     fetch(event.request)
+//       .then(function (res) {
+//         return caches.open(CACHE_DYNAMIC_NAME)
+//           .then(function (cache) {
+//             cache.put(event.request.url, res.clone());
+//             return res;
+//           })
+//       })
+//       .catch(function (err) {
+//         return caches.match(event.request);
+//       })
+//   );
+// });
 
 // Cache Only Strategy
 // self.addEventListener("fetch", function (event) {
