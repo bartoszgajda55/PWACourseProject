@@ -1,5 +1,21 @@
 const CACHE_STATIC_NAME = "static-v12";
 const CACHE_DYNAMIC_NAME = "dynamic-v3";
+const STATIC_FILES = [
+  "/",
+  "/index.html",
+  "/offline.html",
+  "/src/js/app.js",
+  "/src/js/feed.js",
+  "/src/js/promise.js",
+  "/src/js/fetch.js",
+  "/src/js/material.min.js",
+  "/src/css/app.css",
+  "/src/css/feed.css",
+  "/src/images/main-image.jpg",
+  "https://fonts.googleapis.com/css?family=Roboto:400,700",
+  "https://fonts.googleapis.com/icon?family=Material+Icons",
+  "https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.indigo-pink.min.css"
+];
 
 self.addEventListener("install", function (event) {
   console.log("installing sw", event);
@@ -7,22 +23,7 @@ self.addEventListener("install", function (event) {
     caches.open(CACHE_STATIC_NAME)
       .then(function (cache) {
         console.log("precaching app shell");
-        cache.addAll([
-          "/",
-          "/index.html",
-          "/offline.html",
-          "/src/js/app.js",
-          "/src/js/feed.js",
-          "/src/js/promise.js",
-          "/src/js/fetch.js",
-          "/src/js/material.min.js",
-          "/src/css/app.css",
-          "/src/css/feed.css",
-          "/src/images/main-image.jpg",
-          "https://fonts.googleapis.com/css?family=Roboto:400,700",
-          "https://fonts.googleapis.com/icon?family=Material+Icons",
-          "https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.indigo-pink.min.css"
-        ]);
+        cache.addAll(STATIC_FILES);
       })
   );
 });
@@ -73,7 +74,6 @@ self.addEventListener("activate", function (event) {
 // Cache then Network
 self.addEventListener("fetch", function (event) {
   var url = "https://httpbin.org/get";
-
   if (event.request.url.indexOf(url) > -1) {
     event.respondWith(
       caches.open(CACHE_DYNAMIC_NAME)
@@ -84,6 +84,10 @@ self.addEventListener("fetch", function (event) {
               return res;
             });
         })
+    );
+  } else if (new RegExp("\\b" + STATIC_FILES.join("\\b|\\b") + "\\b").test(event.request.url)) {
+    event.respondWith(
+      caches.match(event.request)
     );
   } else {
     event.respondWith(
