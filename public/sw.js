@@ -71,12 +71,15 @@ self.addEventListener("activate", function (event) {
 //   );
 // });
 
-function isInArray(string ,array) {
-  for (let i = 0; i < array.length; i++) {
-    if (array[i] === string)
-      return true;
+function isInArray(string, array) {
+  var cachePath;
+  if (string.indexOf(self.origin) === 0) {
+    console.log('matched ', string);
+    cachePath = string.substring(self.origin.length);
+  } else {
+    cachePath = string;
   }
-  return false;
+  return array.indexOf(cachePath) > -1;
 }
 
 // Cache then Network
